@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelTime - Time Management App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts - Pixel style font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <!-- Pixel-themed background with animated elements will be added via CSS -->
+    <div class="pixel-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top pixel-navbar">
+        <div class="container">
+            <a class="navbar-brand pixel-font" href="#">
+                <i class="fas fa-clock pixel-icon"></i> PixelTime
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pomodoro">Pomodoro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#timers">Timers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#calendar">Calendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schedule">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#todo">To-Do</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="pixel-hero d-flex align-items-center">
+        <div class="container text-center">
+            <div class="pixel-character mb-4"></div>
+            <h1 class="display-4 fw-bold pixel-font">PixelTime</h1>
+            <p class="lead pixel-subtitle">Level Up Your Productivity!</p>
+            <div class="mt-4">
+                <a href="#pomodoro" class="btn btn-primary pixel-btn me-2">Start Pomodoro</a>
+                <a href="#todo" class="btn btn-success pixel-btn">Manage Tasks</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pomodoro Timer Section -->
+    <section id="pomodoro" class="section-padding pixel-section">
+        <div class="container">
+            <div class="pixel-section-header">
+                <h2 class="text-center fw-bold pixel-font">Pomodoro Timer</h2>
+                <div class="pixel-divider"></div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-8">
+                    <div class="pixel-card">
+                        <div class="timer-display">
+                            <div id="pomodoro-timer" class="pixel-timer">25:00</div>
+                            <div id="pomodoro-status" class="pixel-status">Ready to focus!</div>
+                        </div>
+                        <div class="timer-controls mt-4">
+                            <button id="pomodoro-start" class="btn btn-primary pixel-btn me-2">
+                                <i class="fas fa-play"></i> Start
+                            </button>
+                            <button id="pomodoro-pause" class="btn btn-warning pixel-btn me-2" disabled>
+                                <i class="fas fa-pause"></i> Pause
+                            </button>
+                            <button id="pomodoro-reset" class="btn btn-danger pixel-btn">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                        </div>
+                        <div class="timer-settings mt-4">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="pomodoro-work" class="form-label pixel-label">Work Time (min)</label>
+                                    <input type="number" class="form-control pixel-input" id="pomodoro-work" value="25"
+                                        min="1" max="60">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="pomodoro-break" class="form-label pixel-label">Break Time (min)</label>
+                                    <input type="number" class="form-control pixel-input" id="pomodoro-break" value="5"
+                                        min="1" max="30">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="pomodoro-cycles" class="form-label pixel-label">Cycles</label>
+                                    <input type="number" class="form-control pixel-input" id="pomodoro-cycles" value="4"
+                                        min="1" max="10">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pomodoro-stats mt-4">
+                            <div class="pixel-stats">
+                                <span id="completed-pomodoros">0</span> pomodoros completed
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timers Section -->
+    <section id="timers" class="section-padding pixel-section-alt">
+        <div class="container">
+            <div class="pixel-section-header">
+                <h2 class="text-center fw-bold pixel-font">Timers</h2>
+                <div class="pixel-divider"></div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-8">
+                    <div class="pixel-card">
+                        <div class="d-flex justify-content-between mb-4">
+                            <h3 class="pixel-font">Countdown Timers</h3>
+                            <button id="add-timer" class="btn btn-success pixel-btn">
+                                <i class="fas fa-plus"></i> Add Timer
+                            </button>
+                        </div>
+                        <div id="timers-container">
+                            <!-- Timer items will be added here by JavaScript -->
+                            <div class="timer-item mb-3">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control pixel-input" placeholder="Timer Name"
+                                            value="Study Time">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control pixel-input timer-minutes" value="30"
+                                            min="1" max="180">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="timer-display-small">30:00</div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary pixel-btn-sm timer-start">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                        <button class="btn btn-danger pixel-btn-sm timer-delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="pixel-font">Stopwatch</h3>
+                            <div class="stopwatch-display mt-3">
+                                <div id="stopwatch" class="pixel-timer">00:00:00</div>
+                            </div>
+                            <div class="stopwatch-controls mt-3">
+                                <button id="stopwatch-start" class="btn btn-primary pixel-btn me-2">
+                                    <i class="fas fa-play"></i> Start
+                                </button>
+                                <button id="stopwatch-pause" class="btn btn-warning pixel-btn me-2" disabled>
+                                    <i class="fas fa-pause"></i> Pause
+                                </button>
+                                <button id="stopwatch-reset" class="btn btn-danger pixel-btn me-2">
+                                    <i class="fas fa-redo"></i> Reset
+                                </button>
+                                <button id="stopwatch-lap" class="btn btn-info pixel-btn" disabled>
+                                    <i class="fas fa-flag"></i> Lap
+                                </button>
+                            </div>
+                            <div id="laps-container" class="mt-3">
+                                <!-- Lap times will be added here by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section id="calendar" class="section-padding pixel-section">
+        <div class="container">
+            <div class="pixel-section-header">
+                <h2 class="text-center fw-bold pixel-font">Calendar</h2>
+                <div class="pixel-divider"></div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-10">
+                    <div class="pixel-card">
+                        <div class="calendar-controls mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <button id="prev-month" class="btn btn-primary pixel-btn">
+                                        <i class="fas fa-chevron-left"></i> Previous
+                                    </button>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <h3 id="current-month" class="pixel-font">May 2025</h3>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <button id="next-month" class="btn btn-primary pixel-btn">
+                                        Next <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="calendar-container">
+                            <table class="table table-bordered pixel-calendar">
+                                <thead>
+                                    <tr>
+                                        <th>Sun</th>
+                                        <th>Mon</th>
+                                        <th>Tue</th>
+                                        <th>Wed</th>
+                                        <th>Thu</th>
+                                        <th>Fri</th>
+                                        <th>Sat</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="calendar-body">
+                                    <!-- Calendar days will be generated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="event-form mt-4">
+                            <h4 class="pixel-font">Add Event</h4>
+                            <form id="event-form">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="event-date" class="form-label pixel-label">Date</label>
+                                        <input type="date" class="form-control pixel-input" id="event-date" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="event-time" class="form-label pixel-label">Time</label>
+                                        <input type="time" class="form-control pixel-input" id="event-time">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="event-title" class="form-label pixel-label">Event Title</label>
+                                        <input type="text" class="form-control pixel-input" id="event-title" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="event-description"
+                                            class="form-label pixel-label">Description</label>
+                                        <textarea class="form-control pixel-input" id="event-description"
+                                            rows="3"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="event-color" class="form-label pixel-label">Color</label>
+                                        <select class="form-select pixel-input" id="event-color">
+                                            <option value="blue">Blue</option>
+                                            <option value="green">Green</option>
+                                            <option value="red">Red</option>
+                                            <option value="purple">Purple</option>
+                                            <option value="orange">Orange</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="event-reminder" class="form-label pixel-label">Reminder</label>
+                                        <select class="form-select pixel-input" id="event-reminder">
+                                            <option value="none">None</option>
+                                            <option value="15">15 minutes before</option>
+                                            <option value="30">30 minutes before</option>
+                                            <option value="60">1 hour before</option>
+                                            <option value="1440">1 day before</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-success pixel-btn">
+                                            <i class="fas fa-plus"></i> Add Event
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weekly Schedule Section -->
+    <section id="schedule" class="section-padding pixel-section-alt">
+        <div class="container">
+            <div class="pixel-section-header">
+                <h2 class="text-center fw-bold pixel-font">Weekly Schedule</h2>
+                <div class="pixel-divider"></div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-10">
+                    <div class="pixel-card">
+                        <div class="schedule-controls mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <button id="prev-week" class="btn btn-primary pixel-btn">
+                                        <i class="fas fa-chevron-left"></i> Previous Week
+                                    </button>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <h3 id="current-week" class="pixel-font">May 18-24, 2025</h3>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <button id="next-week" class="btn btn-primary pixel-btn">
+                                        Next Week <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="schedule-container">
+                            <div class="table-responsive">
+                                <table class="table table-bordered pixel-schedule">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Monday</th>
+                                            <th>Tuesday</th>
+                                            <th>Wednesday</th>
+                                            <th>Thursday</th>
+                                            <th>Friday</th>
+                                            <th>Saturday</th>
+                                            <th>Sunday</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="schedule-body">
+                                        <!-- Schedule time slots will be generated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="schedule-form mt-4">
+                            <h4 class="pixel-font">Add Schedule Item</h4>
+                            <form id="schedule-form">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="schedule-day" class="form-label pixel-label">Day</label>
+                                        <select class="form-select pixel-input" id="schedule-day" required>
+                                            <option value="monday">Monday</option>
+                                            <option value="tuesday">Tuesday</option>
+                                            <option value="wednesday">Wednesday</option>
+                                            <option value="thursday">Thursday</option>
+                                            <option value="friday">Friday</option>
+                                            <option value="saturday">Saturday</option>
+                                            <option value="sunday">Sunday</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="schedule-start" class="form-label pixel-label">Start Time</label>
+                                        <input type="time" class="form-control pixel-input" id="schedule-start"
+                                            required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="schedule-end" class="form-label pixel-label">End Time</label>
+                                        <input type="time" class="form-control pixel-input" id="schedule-end" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="schedule-title" class="form-label pixel-label">Title</label>
+                                        <input type="text" class="form-control pixel-input" id="schedule-title"
+                                            required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="schedule-location" class="form-label pixel-label">Location</label>
+                                        <input type="text" class="form-control pixel-input" id="schedule-location">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="schedule-color" class="form-label pixel-label">Color</label>
+                                        <select class="form-select pixel-input" id="schedule-color">
+                                            <option value="blue">Blue</option>
+                                            <option value="green">Green</option>
+                                            <option value="red">Red</option>
+                                            <option value="purple">Purple</option>
+                                            <option value="orange">Orange</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="schedule-repeat">
+                                            <label class="form-check-label pixel-label" for="schedule-repeat">
+                                                Repeat weekly
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-success pixel-btn">
+                                            <i class="fas fa-plus"></i> Add to Schedule
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- To-Do List Section -->
+    <section id="todo" class="section-padding pixel-section">
+        <div class="container">
+            <div class="pixel-section-header">
+                <h2 class="text-center fw-bold pixel-font">To-Do List</h2>
+                <div class="pixel-divider"></div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-8">
+                    <div class="pixel-card">
+                        <div class="todo-header mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control pixel-input" id="todo-input"
+                                            placeholder="Add a new task...">
+                                        <button class="btn btn-success pixel-btn" id="add-todo">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select pixel-input" id="todo-filter">
+                                        <option value="all">All Tasks</option>
+                                        <option value="active">Active</option>
+                                        <option value="completed">Completed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="todo-list">
+                            <ul class="list-group" id="todo-items">
+                                <!-- To-do items will be added here by JavaScript -->
+                                <li
+                                    class="list-group-item pixel-list-item d-flex justify-content-between align-items-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="todo-1">
+                                        <label class="form-check-label pixel-label" for="todo-1">
+                                            Complete the PixelTime app
+                                        </label>
+                                    </div>
+                                    <div class="todo-actions">
+                                        <button class="btn btn-sm btn-warning pixel-btn-sm me-1 todo-edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger pixel-btn-sm todo-delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item pixel-list-item d-flex justify-content-between align-items-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="todo-2" checked>
+                                        <label class="form-check-label pixel-label text-decoration-line-through"
+                                            for="todo-2">
+                                            Design pixel art theme
+                                        </label>
+                                    </div>
+                                    <div class="todo-actions">
+                                        <button class="btn btn-sm btn-warning pixel-btn-sm me-1 todo-edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger pixel-btn-sm todo-delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="todo-stats mt-3 d-flex justify-content-between">
+                            <div>
+                                <span id="tasks-left">1</span> tasks left
+                            </div>
+                            <button id="clear-completed" class="btn btn-sm btn-outline-danger pixel-btn-sm">
+                                Clear Completed
+                            </button>
+                        </div>
+                        <div class="todo-categories mt-4">
+                            <h4 class="pixel-font">Categories</h4>
+                            <div class="row g-2 mt-2">
+                                <div class="col-md-4">
+                                    <div class="pixel-category" data-category="work">
+                                        <i class="fas fa-briefcase"></i> Work
+                                        <span class="badge bg-primary rounded-pill">2</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="pixel-category" data-category="personal">
+                                        <i class="fas fa-user"></i> Personal
+                                        <span class="badge bg-success rounded-pill">3</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="pixel-category" data-category="study">
+                                        <i class="fas fa-book"></i> Study
+                                        <span class="badge bg-info rounded-pill">1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-primary pixel-btn-sm mt-2" id="add-category">
+                                <i class="fas fa-plus"></i> Add Category
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievement Section -->
+    <section id="achievements" class="section-padding pixel-section-alt">
+        <div class="container">
+            <div class="pixel-section-header">
+                <h2 class="text-center fw-bold pixel-font">Achievements</h2>
+                <div class="pixel-divider"></div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-8">
+                    <div class="pixel-card">
+                        <div class="row g-4">
+                            <div class="col-md-4 text-center">
+                                <div class="pixel-achievement">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <h4 class="pixel-font">Productivity Streak</h4>
+                                    <div class="achievement-progress">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" style="width: 70%"></div>
+                                        </div>
+                                        <span>7/10 days</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="pixel-achievement">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-check-double"></i>
+                                    </div>
+                                    <h4 class="pixel-font">Task Master</h4>
+                                    <div class="achievement-progress">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" style="width: 40%"></div>
+                                        </div>
+                                        <span>20/50 tasks</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="pixel-achievement">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <h4 class="pixel-font">Focus Champion</h4>
+                                    <div class="achievement-progress">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-primary" style="width: 60%"></div>
+                                        </div>
+                                        <span>6/10 hours</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button class="btn btn-primary pixel-btn" id="view-all-achievements">
+                                View All Achievements
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content pixel-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title pixel-font">Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label pixel-label">Theme</label>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary pixel-theme-btn"
+                                data-theme="default">Default</button>
+                            <button class="btn btn-outline-success pixel-theme-btn" data-theme="forest">Forest</button>
+                            <button class="btn btn-outline-danger pixel-theme-btn" data-theme="lava">Lava</button>
+                            <button class="btn btn-outline-info pixel-theme-btn" data-theme="ocean">Ocean</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label pixel-label">Sound Effects</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="sound-effects" checked>
+                            <label class="form-check-label pixel-label" for="sound-effects">Enable sound effects</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label pixel-label">Notifications</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="notifications" checked>
+                            <label class="form-check-label pixel-label" for="notifications">Enable notifications</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="time-format" class="form-label pixel-label">Time Format</label>
+                        <select class="form-select pixel-input" id="time-format">
+                            <option value="12">12-hour (AM/PM)</option>
+                            <option value="24">24-hour</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary pixel-btn" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary pixel-btn" id="save-settings">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Button (Fixed) -->
+    <div class="settings-button">
+        <button class="btn btn-dark pixel-btn-circle" data-bs-toggle="modal" data-bs-target="#settingsModal">
+            <i class="fas fa-cog"></i>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 pixel-footer">
+        <div class="container">
+            <p class="mb-0 pixel-font">© 2025 PixelTime. Level up your productivity!</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+</body>
+
+</html>
